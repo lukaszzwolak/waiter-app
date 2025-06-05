@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTable } from '../../redux/tablesSlice';
+import { updateTable } from '../../redux/tables/tablesThunks';
 import LoadingScreen from '../common/LoadingScreen';
 import TableFormView from '../views/TableFormView';
 import { useTableForm } from '../../hooks/useTableForm';
@@ -11,7 +11,7 @@ const TablePage = () => {
   const { data, loading } = useSelector(state => state.tables);
 
   const table = data.find(table => table.id === id);
-  const [form, setForm] = useTableForm(table, loading, id); // logika przeniesiona
+  const [form, setForm] = useTableForm(table, loading, id); 
 
   const handleChange = e => {
     const { name, value } = e.target;
