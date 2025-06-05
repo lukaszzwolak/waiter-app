@@ -1,35 +1,19 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { useTableForm } from '../../hooks/useTableForm';
 import { updateTable } from '../../redux/tablesSlice';
+import { Button, Form } from 'react-bootstrap';
+import StatusSelector from '../features/TableForm/StatusSelector';
+import PeopleInputs from '../features/TableForm/PeopleInputs';
+import BillInput from '../features/TableForm/BillInput';
 import LoadingScreen from '../common/LoadingScreen';
-import styles from './TablePage.module.scss';
 
 const TablePage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { data, loading } = useSelector(state => state.tables);
-
-  const table = data.find(table => table.id === id);
-  const [form, setForm] = useState(null);
-
-  useEffect(() => {
-    if (table) setForm({ ...table });
-    else if (!loading) navigate('/');
-  }, [table, loading, navigate]);
-
-  useEffect(() => {
-    if (!form) return;
-    const { status, peopleAmount, maxPeopleAmount } = form;
-
-    if (['Cleaning', 'Free'].includes(status)) {
-      setForm(prev => ({ ...prev, peopleAmount: 0 }));
-    } else if (peopleAmount > maxPeopleAmount) {
-      setForm(prev => ({ ...prev, peopleAmount: maxPeopleAmount }));
-    }
-  }, [form]);
+  const table = data.find(t => t.id === id);
+  const [form, setForm] = useTableForm(table, loading, id);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -44,7 +28,7 @@ const TablePage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(updateTable({ id, data: form })).then(() => navigate('/'));
+    dispatch(updateTable({ id, data: form })).then(() => window.history.back());
   };
 
   if (loading || !form) return <LoadingScreen />;
@@ -52,81 +36,10 @@ const TablePage = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Edit Table {id}</h2>
-
-      <Form.Group className={styles.formGroup}>
-        <Row className="align-items-center">
-          <Col xs="auto">
-            <Form.Label className="mb-0">Status:</Form.Label>
-          </Col>
-          <Col xs="auto">
-            <Form.Select
-              name="status"
-              value={form.status}
-              onChange={handleChange}
-              style={{ width: '160px' }}
-            >
-              <option>Free</option>
-              <option>Reserved</option>
-              <option>Busy</option>
-              <option>Cleaning</option>
-            </Form.Select>
-          </Col>
-        </Row>
-      </Form.Group>
-
-      <Form.Group className={styles.formGroup}>
-        <Row className="align-items-center">
-          <Col xs="auto">
-            <Form.Label className="mb-0">People:</Form.Label>
-          </Col>
-          <Col>
-            <div className={styles.inlineInputs}>
-              <Form.Control
-                type="number"
-                name="peopleAmount"
-                value={form.peopleAmount}
-                onChange={handleNumberChange}
-                min="0"
-                max={form.maxPeopleAmount}
-                className={styles.smallInput}
-              />
-              <span>/</span>
-              <Form.Control
-                type="number"
-                name="maxPeopleAmount"
-                value={form.maxPeopleAmount}
-                onChange={handleNumberChange}
-                min="1"
-                max="10"
-                className={styles.smallInput}
-              />
-            </div>
-          </Col>
-        </Row>
-      </Form.Group>
-
-      <Form.Group className={styles.formGroup}>
-        <Row className="align-items-center">
-          <Col xs="auto">
-            <Form.Label className="mb-0">Bill:</Form.Label>
-          </Col>
-          <Col xs="auto">
-            <div className={styles.inlineInputs}>
-              <span>$</span>
-              <Form.Control
-                type="number"
-                name="bill"
-                value={form.bill}
-                onChange={handleNumberChange}
-                min="0"
-                className={styles.billInput}
-              />
-            </div>
-          </Col>
-        </Row>
-      </Form.Group>
-
-      <Button variant="primary" type="submit">Update</Button>
+      <StatusSelector value={form.status} onChange={handleChange} />
+      <PeopleInputs form={form} onChange={handleNumberChange} />
+      <BillInput value={form.bill} onChange={handleNumberChange} />
+      <Button type="submit">Update</Button>
     </Form>
   );
 };
