@@ -1,27 +1,30 @@
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import styles from './TableForm.module.scss';
 
-const BillInput = ({ value, onChange }) => (
+const PeopleInputs = ({ peopleAmount, maxPeopleAmount, onChange }) => (
   <Form.Group className={styles.formGroup}>
-    <Row className="align-items-center">
-      <Col xs="auto">
-        <Form.Label className="mb-0">Bill:</Form.Label>
-      </Col>
-      <Col xs="auto">
-        <div className={styles.inlineInputs}>
-          <span>$</span>
-          <Form.Control
-            type="number"
-            name="bill"
-            value={value}
-            onChange={onChange}
-            min="0"
-            className={styles.billInput}
-          />
-        </div>
-      </Col>
-    </Row>
+    <div className={styles.inlineInputs}>
+      <Form.Control
+        type="number"
+        name="peopleAmount"
+        value={peopleAmount}
+        onChange={onChange}
+        min="0"
+        max={maxPeopleAmount}
+        className={styles.smallInput}
+      />
+      <span>/</span>
+      <Form.Control
+        type="number"
+        name="maxPeopleAmount"
+        value={maxPeopleAmount}
+        onChange={onChange}
+        min="1"
+        max="10"
+        className={styles.smallInput}
+      />
+    </div>
   </Form.Group>
 );
 
-export default BillInput;
+export default PeopleInputs;
