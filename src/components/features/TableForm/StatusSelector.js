@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form } from 'react-bootstrap';
 
 const StatusSelector = ({ value, onChange }) => (
@@ -14,4 +13,5 @@ const StatusSelector = ({ value, onChange }) => (
     <option>Cleaning</option>
   </Form.Select>
 );
+
 export default StatusSelector;

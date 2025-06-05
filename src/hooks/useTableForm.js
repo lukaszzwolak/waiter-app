@@ -6,8 +6,11 @@ export const useTableForm = (table, loading, id) => {
   const [form, setForm] = useState(null);
 
   useEffect(() => {
-    if (table) setForm({ ...table });
-    else if (!loading) navigate('/');
+    if (table) {
+      setForm({ ...table });
+    } else if (!loading) {
+      navigate('/');
+    }
   }, [table, loading, navigate]);
 
   useEffect(() => {

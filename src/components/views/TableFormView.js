@@ -24,7 +24,7 @@ const TableFormView = ({ id, form, onChange, onNumberChange, onSubmit }) => (
         <Col xs="auto">
           <Form.Label className="mb-0">People:</Form.Label>
         </Col>
-        <Col>
+        <Col xs="auto">
           <PeopleInputs
             peopleAmount={form.peopleAmount}
             maxPeopleAmount={form.maxPeopleAmount}
