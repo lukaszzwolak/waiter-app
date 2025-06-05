@@ -24,12 +24,11 @@ const TablePage = () => {
     const { status, peopleAmount, maxPeopleAmount } = form;
 
     if (['Cleaning', 'Free'].includes(status)) {
-        setForm(prev => ({ ...prev, peopleAmount: 0 }));
+      setForm(prev => ({ ...prev, peopleAmount: 0 }));
     } else if (peopleAmount > maxPeopleAmount) {
-        setForm(prev => ({ ...prev, peopleAmount: maxPeopleAmount }));
+      setForm(prev => ({ ...prev, peopleAmount: maxPeopleAmount }));
     }
   }, [form]);
-
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -50,65 +49,88 @@ const TablePage = () => {
   if (loading || !form) return <Spinner animation="border" />;
 
   return (
-  <Form onSubmit={handleSubmit}>
-    <h2>Edit Table {id}</h2>
+    <Form onSubmit={handleSubmit}>
+      <h2>Edit Table {id}</h2>
 
-    <Form.Group className="mb-3">
-      <Form.Label>Status</Form.Label>
-      <Form.Select name="status" value={form.status} onChange={handleChange}>
-        <option>Free</option>
-        <option>Reserved</option>
-        <option>Busy</option>
-        <option>Cleaning</option>
-      </Form.Select>
-    </Form.Group>
-
-    <Form.Group className="mb-3">
-      <Form.Label>People</Form.Label>
-      <div className="d-flex align-items-center gap-2">
-        <Form.Control
-          type="number"
-          name="peopleAmount"
-          value={form.peopleAmount}
-          onChange={handleNumberChange}
-          min="0"
-          max={form.maxPeopleAmount}
-          style={{ width: "80px" }}
-        />
-        <span>/</span>
-        <Form.Control
-          type="number"
-          name="maxPeopleAmount"
-          value={form.maxPeopleAmount}
-          onChange={handleNumberChange}
-          min="1"
-          max="10"
-          style={{ width: "80px" }}
-        />
-      </div>
-    </Form.Group>
-
-    {form.status === 'Busy' && (
+      {/* STATUS */}
       <Form.Group className="mb-3">
-        <Form.Label>Bill</Form.Label>
-        <div className="d-flex align-items-center gap-2">
-          <span>$</span>
-          <Form.Control
-            type="number"
-            name="bill"
-            value={form.bill}
-            onChange={handleNumberChange}
-            min="0"
-            style={{ width: "100px" }}
-          />
-        </div>
+        <Row className="align-items-center">
+          <Col xs="auto">
+            <Form.Label className="mb-0">Status:</Form.Label>
+          </Col>
+          <Col xs="auto">
+            <Form.Select
+              name="status"
+              value={form.status}
+              onChange={handleChange}
+              style={{ width: '160px' }}
+            >
+              <option>Free</option>
+              <option>Reserved</option>
+              <option>Busy</option>
+              <option>Cleaning</option>
+            </Form.Select>
+          </Col>
+        </Row>
       </Form.Group>
-    )}
 
-    <Button variant="primary" type="submit">Update</Button>
-  </Form>
-);
+      {/* PEOPLE / MAX PEOPLE */}
+      <Form.Group className="mb-3">
+        <Row className="align-items-center">
+          <Col xs="auto">
+            <Form.Label className="mb-0">People:</Form.Label>
+          </Col>
+          <Col>
+            <div className="d-flex align-items-center gap-2">
+              <Form.Control
+                type="number"
+                name="peopleAmount"
+                value={form.peopleAmount}
+                onChange={handleNumberChange}
+                min="0"
+                max={form.maxPeopleAmount}
+                style={{ width: "80px" }}
+              />
+              <span>/</span>
+              <Form.Control
+                type="number"
+                name="maxPeopleAmount"
+                value={form.maxPeopleAmount}
+                onChange={handleNumberChange}
+                min="1"
+                max="10"
+                style={{ width: "80px" }}
+              />
+            </div>
+          </Col>
+        </Row>
+      </Form.Group>
 
+      {/* BILL */}
+      <Form.Group className="mb-3">
+        <Row className="align-items-center">
+          <Col xs="auto">
+            <Form.Label className="mb-0">Bill:</Form.Label>
+          </Col>
+          <Col xs="auto">
+            <div className="d-flex align-items-center gap-2">
+              <span>$</span>
+              <Form.Control
+                type="number"
+                name="bill"
+                value={form.bill}
+                onChange={handleNumberChange}
+                min="0"
+                style={{ width: "100px" }}
+              />
+            </div>
+          </Col>
+        </Row>
+      </Form.Group>
+
+      <Button variant="primary" type="submit">Update</Button>
+    </Form>
+  );
 };
 
 export default TablePage;
