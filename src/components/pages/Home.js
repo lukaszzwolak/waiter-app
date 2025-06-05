@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { fetchTables } from '../../redux/tablesSlice';
 import { Spinner, Button, Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import LoadingScreen from '../common/LoadingScreen';
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector(state => state.tables);
@@ -12,7 +12,7 @@ const Home = () => {
     dispatch(fetchTables());
   }, [dispatch]);
 
-  if (loading) return <Spinner animation="border" />;
+if (loading) return <LoadingScreen />;
   if (error) return <p className="text-danger">Error: {error}</p>;
 
   return (

@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Spinner, Button, Form, Row, Col } from 'react-bootstrap';
 import { updateTable } from '../../redux/tablesSlice';
+import LoadingScreen from '../common/LoadingScreen';
+
 
 const TablePage = () => {
   const { id } = useParams();
@@ -46,13 +48,12 @@ const TablePage = () => {
     dispatch(updateTable({ id, data: form })).then(() => navigate('/'));
   };
 
-  if (loading || !form) return <Spinner animation="border" />;
+if (loading || !form) return <LoadingScreen />;
 
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Edit Table {id}</h2>
 
-      {/* STATUS */}
       <Form.Group className="mb-3">
         <Row className="align-items-center">
           <Col xs="auto">
@@ -74,7 +75,6 @@ const TablePage = () => {
         </Row>
       </Form.Group>
 
-      {/* PEOPLE / MAX PEOPLE */}
       <Form.Group className="mb-3">
         <Row className="align-items-center">
           <Col xs="auto">
@@ -106,7 +106,6 @@ const TablePage = () => {
         </Row>
       </Form.Group>
 
-      {/* BILL */}
       <Form.Group className="mb-3">
         <Row className="align-items-center">
           <Col xs="auto">
