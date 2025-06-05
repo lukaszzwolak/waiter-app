@@ -3,6 +3,7 @@ import { Container, Navbar, Nav } from 'react-bootstrap';
 import Home from './components/pages/Home';
 import TablePage from './components/pages/TablePage';
 import NotFound from './components/pages/NotFound';
+import Footer from './components/common/Footer';
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path="/table/:id" element={<TablePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        <Footer />
       </Container>
     </BrowserRouter>
   );
