@@ -8,7 +8,7 @@ import Footer from './components/common/Footer';
 function App() {
   return (
     <BrowserRouter>
-      <Container>
+      <Container className="pb-4">
         <Navbar bg="primary" variant="dark" className="mb-4 rounded">
           <Navbar.Brand as={Link} to="/" className="ms-4">
             Waiter.app

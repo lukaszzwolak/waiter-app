@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Spinner, Button, Form, Row, Col } from 'react-bootstrap';
+import { Button, Form, Row, Col } from 'react-bootstrap';
 import { updateTable } from '../../redux/tablesSlice';
 import LoadingScreen from '../common/LoadingScreen';
-
+import styles from './TablePage.module.scss';
 
 const TablePage = () => {
   const { id } = useParams();
@@ -22,7 +22,6 @@ const TablePage = () => {
 
   useEffect(() => {
     if (!form) return;
-
     const { status, peopleAmount, maxPeopleAmount } = form;
 
     if (['Cleaning', 'Free'].includes(status)) {
@@ -48,13 +47,13 @@ const TablePage = () => {
     dispatch(updateTable({ id, data: form })).then(() => navigate('/'));
   };
 
-if (loading || !form) return <LoadingScreen />;
+  if (loading || !form) return <LoadingScreen />;
 
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Edit Table {id}</h2>
 
-      <Form.Group className="mb-3">
+      <Form.Group className={styles.formGroup}>
         <Row className="align-items-center">
           <Col xs="auto">
             <Form.Label className="mb-0">Status:</Form.Label>
@@ -75,13 +74,13 @@ if (loading || !form) return <LoadingScreen />;
         </Row>
       </Form.Group>
 
-      <Form.Group className="mb-3">
+      <Form.Group className={styles.formGroup}>
         <Row className="align-items-center">
           <Col xs="auto">
             <Form.Label className="mb-0">People:</Form.Label>
           </Col>
           <Col>
-            <div className="d-flex align-items-center gap-2">
+            <div className={styles.inlineInputs}>
               <Form.Control
                 type="number"
                 name="peopleAmount"
@@ -89,7 +88,7 @@ if (loading || !form) return <LoadingScreen />;
                 onChange={handleNumberChange}
                 min="0"
                 max={form.maxPeopleAmount}
-                style={{ width: "80px" }}
+                className={styles.smallInput}
               />
               <span>/</span>
               <Form.Control
@@ -99,20 +98,20 @@ if (loading || !form) return <LoadingScreen />;
                 onChange={handleNumberChange}
                 min="1"
                 max="10"
-                style={{ width: "80px" }}
+                className={styles.smallInput}
               />
             </div>
           </Col>
         </Row>
       </Form.Group>
 
-      <Form.Group className="mb-3">
+      <Form.Group className={styles.formGroup}>
         <Row className="align-items-center">
           <Col xs="auto">
             <Form.Label className="mb-0">Bill:</Form.Label>
           </Col>
           <Col xs="auto">
-            <div className="d-flex align-items-center gap-2">
+            <div className={styles.inlineInputs}>
               <span>$</span>
               <Form.Control
                 type="number"
@@ -120,7 +119,7 @@ if (loading || !form) return <LoadingScreen />;
                 value={form.bill}
                 onChange={handleNumberChange}
                 min="0"
-                style={{ width: "100px" }}
+                className={styles.billInput}
               />
             </div>
           </Col>
