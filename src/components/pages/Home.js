@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchTables } from '../../redux/tablesSlice';
-import { Spinner, Button, Card, Row, Col } from 'react-bootstrap';
+import { Spinner, Button, Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -16,24 +16,27 @@ const Home = () => {
   if (error) return <p className="text-danger">Error: {error}</p>;
 
   return (
-    <>
-      <h2>All Tables</h2>
-      <Row>
-        {data.map(table => (
-          <Col xs={12} md={6} lg={4} key={table.id} className="mb-4">
-            <Card>
-              <Card.Body>
-                <Card.Title>Table {table.id}</Card.Title>
-                <Card.Text>Status: <strong>{table.status}</strong></Card.Text>
-                <Link to={`/table/${table.id}`}>
-                  <Button variant="primary">Show more</Button>
-                </Link>
-              </Card.Body>
-            </Card>
+    <Container>
+      <h2 className="my-4">All tables</h2>
+      {data.map(table => (
+        <Row
+          key={table.id}
+          className="align-items-center py-2 border-bottom"
+        >
+          <Col xs={6}>
+            <strong>Table {table.id}</strong>{' '}
+            <span className="ms-2">
+              Status: <strong>{table.status}</strong>
+            </span>
           </Col>
-        ))}
-      </Row>
-    </>
+          <Col xs={6} className="text-end">
+            <Link to={`/table/${table.id}`}>
+              <Button variant="primary" size="sm">Show more</Button>
+            </Link>
+          </Col>
+        </Row>
+      ))}
+    </Container>
   );
 };
 

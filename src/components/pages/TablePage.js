@@ -20,13 +20,16 @@ const TablePage = () => {
 
   useEffect(() => {
     if (!form) return;
-    if (['Cleaning', 'Free'].includes(form.status)) {
-      setForm(prev => ({ ...prev, peopleAmount: 0 }));
+
+    const { status, peopleAmount, maxPeopleAmount } = form;
+
+    if (['Cleaning', 'Free'].includes(status)) {
+        setForm(prev => ({ ...prev, peopleAmount: 0 }));
+    } else if (peopleAmount > maxPeopleAmount) {
+        setForm(prev => ({ ...prev, peopleAmount: maxPeopleAmount }));
     }
-    if (form.peopleAmount > form.maxPeopleAmount) {
-      setForm(prev => ({ ...prev, peopleAmount: form.maxPeopleAmount }));
-    }
-  }, [form.status, form.maxPeopleAmount]);
+  }, [form]);
+
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -47,62 +50,65 @@ const TablePage = () => {
   if (loading || !form) return <Spinner animation="border" />;
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2>Edit Table {id}</h2>
+  <Form onSubmit={handleSubmit}>
+    <h2>Edit Table {id}</h2>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Status</Form.Label>
+      <Form.Select name="status" value={form.status} onChange={handleChange}>
+        <option>Free</option>
+        <option>Reserved</option>
+        <option>Busy</option>
+        <option>Cleaning</option>
+      </Form.Select>
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>People</Form.Label>
+      <div className="d-flex align-items-center gap-2">
+        <Form.Control
+          type="number"
+          name="peopleAmount"
+          value={form.peopleAmount}
+          onChange={handleNumberChange}
+          min="0"
+          max={form.maxPeopleAmount}
+          style={{ width: "80px" }}
+        />
+        <span>/</span>
+        <Form.Control
+          type="number"
+          name="maxPeopleAmount"
+          value={form.maxPeopleAmount}
+          onChange={handleNumberChange}
+          min="1"
+          max="10"
+          style={{ width: "80px" }}
+        />
+      </div>
+    </Form.Group>
+
+    {form.status === 'Busy' && (
       <Form.Group className="mb-3">
-        <Form.Label>Status</Form.Label>
-        <Form.Select name="status" value={form.status} onChange={handleChange}>
-          <option>Free</option>
-          <option>Reserved</option>
-          <option>Busy</option>
-          <option>Cleaning</option>
-        </Form.Select>
-      </Form.Group>
-
-      <Row>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label>People</Form.Label>
-            <Form.Control
-              type="number"
-              name="peopleAmount"
-              value={form.peopleAmount}
-              onChange={handleNumberChange}
-              max="10"
-              min="0"
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label>Max People</Form.Label>
-            <Form.Control
-              type="number"
-              name="maxPeopleAmount"
-              value={form.maxPeopleAmount}
-              onChange={handleNumberChange}
-              max="10"
-              min="0"
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-
-      {form.status === 'Busy' && (
-        <Form.Group className="mb-3">
-          <Form.Label>Bill</Form.Label>
+        <Form.Label>Bill</Form.Label>
+        <div className="d-flex align-items-center gap-2">
+          <span>$</span>
           <Form.Control
             type="number"
             name="bill"
             value={form.bill}
             onChange={handleNumberChange}
+            min="0"
+            style={{ width: "100px" }}
           />
-        </Form.Group>
-      )}
+        </div>
+      </Form.Group>
+    )}
 
-      <Button variant="primary" type="submit">Update</Button>
-    </Form>
-  );
+    <Button variant="primary" type="submit">Update</Button>
+  </Form>
+);
+
 };
 
 export default TablePage;
