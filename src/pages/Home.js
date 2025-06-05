@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchTables } from '../../redux/tables/tablesThunks';
+import { fetchTables } from '../features/tables/tablesThunks';
 import { Container } from 'react-bootstrap';
-import LoadingScreen from '../common/LoadingScreen';
-import TableRow from '../views/TableRow';
+import LoadingScreen from '../components/common/LoadingScreen';
+import TableRow from '../components/views/TableRow';
 
 const Home = () => {
   const dispatch = useDispatch();

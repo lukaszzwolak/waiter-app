@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTable } from '../../redux/tables/tablesThunks';
-import LoadingScreen from '../common/LoadingScreen';
-import TableFormView from '../views/TableFormView';
-import { useTableForm } from '../../hooks/useTableForm';
+import { updateTable } from '../features/tables/tablesThunks';
+import LoadingScreen from '../components/common/LoadingScreen';
+import TableFormView from '../components/views/TableFormView';
+import { useTableForm } from '../hooks/useTableForm';
 
 const TablePage = () => {
   const { id } = useParams();

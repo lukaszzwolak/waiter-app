@@ -1,8 +1,8 @@
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import StatusSelector from '../features/TableForm/StatusSelector';
-import PeopleInputs from '../features/TableForm/PeopleInputs';
-import BillInput from '../features/TableForm/BillInput';
-import styles from '../features/TableForm/TableForm.module.scss';
+import StatusSelector from '../../features/tables/components/StatusSelector';
+import PeopleInputs from '../../features/tables/components/PeopleInputs';
+import BillInput from '../../features/tables/components/BillInput';
+import styles from '../../features/tables/components/TableForm.module.scss';
 
 const TableFormView = ({ id, form, onChange, onNumberChange, onSubmit }) => (
   <Form onSubmit={onSubmit}>
@@ -34,9 +34,7 @@ const TableFormView = ({ id, form, onChange, onNumberChange, onSubmit }) => (
       </Row>
     </Form.Group>
 
-    {form.status === 'Busy' && (
-      <BillInput value={form.bill} onChange={onNumberChange} />
-    )}
+    <BillInput value={form.bill} onChange={onNumberChange} />
 
     <Button variant="primary" type="submit">Update</Button>
   </Form>

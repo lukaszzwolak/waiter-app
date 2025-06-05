@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import Home from './components/pages/Home';
-import TablePage from './components/pages/TablePage';
-import NotFound from './components/pages/NotFound';
+import Home from './pages/Home';
+import TablePage from './pages/TablePage';
+import NotFound from './pages/NotFound';
 import Footer from './components/common/Footer';
 import Navigation from './components/common/Navigation';
 
