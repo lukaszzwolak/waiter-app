@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# 🧾 Waiter App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A table management application for restaurants, built with React, Redux Toolkit, and JSON Server.
 
-## Available Scripts
+## 🔗 Live Demo
 
-In the project directory, you can run:
+You can view the live version here:  
+👉 [http://128.140.64.138:3000](http://128.140.64.138:3000)
 
-### `npm start`
+> *Note: The backend is powered by JSON Server and runs on port 3131 using a REST API.*
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠 Technologies Used
 
-### `npm test`
+- React + Redux Toolkit
+- React Router DOM
+- React Bootstrap
+- JSON Server (mock backend)
+- PM2 (process manager on VPS)
+- Yarn / npm
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📁 Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+waiter-app/
+├── public/
+├── src/
+│ ├── components/ # Shared components
+│ ├── features/tables/ # Redux slice + thunks
+│ ├── pages/ # Page views
+│ ├── styles/ # SCSS styling
+│ └── ...
+├── .env # Environment variables
+├── package.json
+└── ...
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+yaml
+Kopiuj
+Edytuj
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Running Locally
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+# Install dependencies
+yarn install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Start frontend + mock API
+yarn start
+⚙️ Production Deployment on VPS
+1. Build the frontend:
+bash
+Kopiuj
+Edytuj
+yarn build
+2. Serve the production build:
+bash
+Kopiuj
+Edytuj
+serve -s build -l 3000
+3. Start JSON Server backend:
+bash
+Kopiuj
+Edytuj
+npx json-server --host 0.0.0.0 --port 3131 --delay 250 --watch public/db/app.json --routes public/db/routes.json
+Optionally, use PM2 to run both frontend and backend as background services.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+📦 API Endpoints
+GET /api/tables – Fetch all tables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+PATCH /api/tables/:id – Update a table
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+👤 Author
+Łukasz Zwolak
+Project created as part of a React/Redux learning path and deployed to a VPS environment.
